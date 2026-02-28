@@ -1,10 +1,11 @@
 import Image from "next/image";
+import Appbar from "./components/Appbar";
 
 
 export default function Home() {
   return (
     <main>
-      <h1>Hello world</h1>
+      <Appbar />
     </main>
   );
 }
