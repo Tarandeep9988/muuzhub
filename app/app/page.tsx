@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Appbar from "./components/Appbar";
+import Appbar from "@/components/Appbar";
 
 
 export default function Home() {
