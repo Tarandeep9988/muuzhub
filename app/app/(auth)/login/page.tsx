@@ -89,10 +89,11 @@ export default function LoginPage() {
 
       {/* Social Auth */}
       <div className="grid grid-cols-2 gap-4">
-        <Button variant="outline" disabled={isLoading} onClick={() => {signIn()}}>
+        <Button variant="outline" disabled={isLoading} onClick={() => {signIn('google', { callbackUrl: '/' })}}>
           Google
         </Button>
-        <Button variant="outline" disabled={isLoading} onClick={() => {}}>
+        {/* Only login with google is implemented */}
+        <Button variant="outline" disabled={isLoading} onClick={() => {signIn('github', { callbackUrl: '/' })}}>
           GitHub
         </Button>
       </div>
