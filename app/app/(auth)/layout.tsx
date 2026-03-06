@@ -1,17 +1,12 @@
-import { getServerSession } from 'next-auth'
-import { redirect } from 'next/navigation'
+'use client'
+
 import { ReactNode } from 'react'
 
-export default async function AuthLayout({
+export default function AuthLayout({
   children,
 }: {
   children: ReactNode
 }) {
-  const session = await getServerSession()
-  if (session) {
-    redirect('/dashboard')
-  }
-
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
       {children}

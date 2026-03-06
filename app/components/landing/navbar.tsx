@@ -1,19 +1,11 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Play, Menu, X } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Play, Menu, X } from "lucide-react"
 
 export function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const router = useRouter();
-  const session = useSession();
-
-  function navigate(path: string) {
-    router.push(path);
-  }
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
@@ -28,54 +20,24 @@ export function Navbar() {
         </a>
 
         <div className="hidden items-center gap-8 md:flex">
-          <a
-            href="#features"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
+          <a href="#features" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
             Features
           </a>
-          <a
-            href="#how-it-works"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
+          <a href="#how-it-works" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
             How It Works
           </a>
-          <a
-            href="#stats"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
+          <a href="#stats" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
             Community
           </a>
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          {session.status === "authenticated" ? (
-            <Button
-              size="sm"
-              className="font-semibold"
-              onClick={() => signOut()}
-            >
-              Logout
-            </Button>
-          ) : (
-            <>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-muted-foreground hover:text-foreground"
-                onClick={() => navigate("/login")}
-              >
-                Log in
-              </Button>
-              <Button
-                size="sm"
-                className="font-semibold"
-                onClick={() => navigate("/signup")}
-              >
-                Get Started
-              </Button>
-            </>
-          )}
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+            Log in
+          </Button>
+          <Button size="sm" className="font-semibold">
+            Get Started
+          </Button>
         </div>
 
         <button
@@ -94,41 +56,20 @@ export function Navbar() {
       {mobileOpen && (
         <div className="border-t border-border/50 bg-background px-6 py-4 md:hidden">
           <div className="flex flex-col gap-4">
-            <a
-              href="#features"
-              className="text-sm text-muted-foreground"
-              onClick={() => setMobileOpen(false)}
-            >
+            <a href="#features" className="text-sm text-muted-foreground" onClick={() => setMobileOpen(false)}>
               Features
             </a>
-            <a
-              href="#how-it-works"
-              className="text-sm text-muted-foreground"
-              onClick={() => setMobileOpen(false)}
-            >
+            <a href="#how-it-works" className="text-sm text-muted-foreground" onClick={() => setMobileOpen(false)}>
               How It Works
             </a>
-            <a
-              href="#stats"
-              className="text-sm text-muted-foreground"
-              onClick={() => setMobileOpen(false)}
-            >
+            <a href="#stats" className="text-sm text-muted-foreground" onClick={() => setMobileOpen(false)}>
               Community
             </a>
             <div className="flex gap-3 pt-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-muted-foreground"
-                onClick={() => navigate("/login")}
-              >
+              <Button variant="ghost" size="sm" className="text-muted-foreground">
                 Log in
               </Button>
-              <Button
-                size="sm"
-                className="font-semibold"
-                onClick={() => navigate("/signup")}
-              >
+              <Button size="sm" className="font-semibold">
                 Get Started
               </Button>
             </div>
@@ -136,5 +77,5 @@ export function Navbar() {
         </div>
       )}
     </header>
-  );
+  )
 }
