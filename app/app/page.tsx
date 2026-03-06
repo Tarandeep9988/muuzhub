@@ -5,8 +5,14 @@ import { HowItWorks } from "@/components/landing/how-it-works"
 import { Stats } from "@/components/landing/stats"
 import { CTA } from "@/components/landing/cta"
 import { Footer } from "@/components/landing/footer"
+import { getServerSession } from "next-auth"
+import { redirect } from "next/navigation"
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession();
+  if (session) {
+    return redirect("/dashboard");
+  }
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
