@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "@/generated/prisma"
+  output   = "./generated/prisma"
 }
 
 datasource db {
@@ -14,39 +14,72 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(uuid())
-  email    String    @unique
-  provider Provider
-  streams  Stream[]
-  upvotes  Upvotes[]
+  id        String    @id @default(uuid())
+  email     String    @unique
+  provider  Provider  
+  streams   Stream[]
+  votes     Upvote[]
+  rooms     Room[]    @relation("RoomAdmin")
+
+  createdAt DateTime  @default(now())
+}
+
+model Room {
+  id              String   @id @default(uuid())
+  code            String   @unique
+  adminId         String
+  admin           User     @relation("RoomAdmin", fields: [adminId], references: [id])
+
+  currentStreamId String?  @unique
+  currentStream   Stream?  @relation("CurrentStream", fields: [currentStreamId], references: [id])
+
+  streams         Stream[] @relation("RoomStreams")
+
+  createdAt       DateTime @default(now())
+  isActive        Boolean  @default(true)
 }
 
 model Stream {
   id            String     @id @default(uuid())
+
+  roomId        String
+  room          Room       @relation("RoomStreams", fields: [roomId], references: [id])
+
+  userId        String
+  user          User       @relation(fields: [userId], references: [id])
+
   type          StreamType
-  active        Boolean    @default(true)
   url           String
   extractedId   String
+
   title         String     @default("")
   smallImageUrl String     @default("")
   bigImageUrl   String     @default("")
-  upvotes       Upvotes[]
-  userId        String
-  user          User       @relation(fields: [userId], references: [id])
+
+  active        Boolean    @default(true)
+  played        Boolean    @default(false)
+
+  upvotes       Upvote[]
+  currentRoomId Room?      @relation("CurrentStream")
+
+  createdAt     DateTime   @default(now())
 }
 
-model Upvotes {
-  id       String @id @default(uuid())
-  userId   String
-  streamId String
-  user     User   @relation(fields: [userId], references: [id])
-  stream   Stream @relation(fields: [streamId], references: [id])
+model Upvote {
+  id        String   @id @default(uuid())
+
+  userId    String
+  streamId  String
+
+  user      User     @relation(fields: [userId], references: [id])
+  stream    Stream   @relation(fields: [streamId], references: [id])
+
+  createdAt DateTime @default(now())
 
   @@unique([userId, streamId])
 }
 
 enum StreamType {
-  Spotify
   Youtube
 }
 
