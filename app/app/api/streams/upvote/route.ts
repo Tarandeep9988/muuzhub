@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = UpvoteSchema.parse(await request.json());
-    prismaClient.upvotes.create({
+    prismaClient.upvote.create({
         data: {
           userId: user.id,
           streamId: data.streamId,

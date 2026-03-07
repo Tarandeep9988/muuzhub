@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = DownvoteSchema.parse(await request.json());
-    prismaClient.upvotes.delete({
+    prismaClient.upvote.delete({
         where: {
           userId_streamId: {
             userId: user.id,

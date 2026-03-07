@@ -14,65 +14,61 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  provider  Provider  
-  streams   Stream[]
-  votes     Upvote[]
-  rooms     Room[]    @relation("RoomAdmin")
+  id       String   @id @default(uuid())
+  email    String   @unique
+  provider Provider
 
-  createdAt DateTime  @default(now())
+  streams Stream[]
+  votes   Upvote[]
+  rooms   Room[]   @relation("RoomAdmin")
+
+  createdAt DateTime @default(now())
 }
 
 model Room {
-  id              String   @id @default(uuid())
-  code            String   @unique
-  adminId         String
-  admin           User     @relation("RoomAdmin", fields: [adminId], references: [id])
+  id String @id @default(uuid())
 
-  currentStreamId String?  @unique
-  currentStream   Stream?  @relation("CurrentStream", fields: [currentStreamId], references: [id])
+  adminId String
+  admin   User   @relation("RoomAdmin", fields: [adminId], references: [id])
 
-  streams         Stream[] @relation("RoomStreams")
+  currentStreamId String? @unique
+  currentStream   Stream? @relation("CurrentStream", fields: [currentStreamId], references: [id])
 
-  createdAt       DateTime @default(now())
-  isActive        Boolean  @default(true)
+  streams Stream[] @relation("RoomStreams")
+
+  createdAt DateTime @default(now())
+  isActive  Boolean  @default(true)
 }
 
 model Stream {
-  id            String     @id @default(uuid())
+  id String @id @default(uuid())
 
-  roomId        String
-  room          Room       @relation("RoomStreams", fields: [roomId], references: [id])
+  roomId String
+  room   Room   @relation("RoomStreams", fields: [roomId], references: [id])
 
-  userId        String
-  user          User       @relation(fields: [userId], references: [id])
+  currentStreamOf Room? @relation("CurrentStream")
 
-  type          StreamType
-  url           String
-  extractedId   String
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
-  title         String     @default("")
-  smallImageUrl String     @default("")
-  bigImageUrl   String     @default("")
+  url String
 
-  active        Boolean    @default(true)
-  played        Boolean    @default(false)
+  active Boolean @default(true)
+  played Boolean @default(false)
 
-  upvotes       Upvote[]
-  currentRoomId Room?      @relation("CurrentStream")
+  upvotes Upvote[]
 
-  createdAt     DateTime   @default(now())
+  createdAt DateTime @default(now())
 }
 
 model Upvote {
-  id        String   @id @default(uuid())
+  id String @id @default(uuid())
 
-  userId    String
-  streamId  String
+  userId   String
+  streamId String
 
-  user      User     @relation(fields: [userId], references: [id])
-  stream    Stream   @relation(fields: [streamId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+  stream Stream @relation(fields: [streamId], references: [id])
 
   createdAt DateTime @default(now())
 
