@@ -30,10 +30,6 @@ export default async function RoomPage({ params }: { params: Promise<{ roomCode:
     return;
   }
 
-
-  return (
-    <>
-      <RoomView params={params}  />
-    </>
-  )
+  // let say here room is valid and user is authenticated
+  return <RoomView params={params} user={user} room={room} />
 }

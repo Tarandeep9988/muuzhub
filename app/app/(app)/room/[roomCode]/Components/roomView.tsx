@@ -57,7 +57,7 @@ const MOCK_VIDEOS: Video[] = [
   },
 ]
 
-export default function RoomView({ params }: { params: Promise<{ roomCode: string }> }) {
+export default function RoomView({ params, user, room }: { params: Promise<{ roomCode: string }>, user: any, room: any }) {
   const { roomCode } = use(params)
   const [currentVideo, setCurrentVideo] = useState<Video | null>(MOCK_VIDEOS[0])
   const [queue, setQueue] = useState<Video[]>(MOCK_VIDEOS.slice(1))

@@ -1,8 +1,13 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { signIn } from 'next-auth/react'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -24,7 +29,7 @@ export default function LoginPage() {
       })
 
       if (res.ok) {
-        router.push('/dashboard')
+        router.push('/')
       }
     } catch (error) {
       console.error('Error logging in:', error)
@@ -34,63 +39,72 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
-      <div className="w-full max-w-md rounded-lg border border-border bg-card p-8">
-        {/* Header */}
-        <div className="space-y-2 text-center">
-          <h1 className="text-2xl font-bold text-foreground">Welcome to muuzHub</h1>
-          <p className="text-sm text-muted-foreground">Sign in to your account</p>
+    <Card className="w-full max-w-md space-y-8 p-8">
+      {/* Header */}
+      <div className="space-y-2 text-center">
+        <h1 className="text-2xl font-bold text-foreground">Welcome to muuzHub</h1>
+        <p className="text-sm text-muted-foreground">Sign in to your account</p>
+      </div>
+
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="you@example.com"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            required
+          />
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-          <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm font-medium text-foreground">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              required
-              className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground placeholder-muted-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
+        <div className="space-y-2">
+          <Label htmlFor="password">Password</Label>
+          <Input
+            id="password"
+            type="password"
+            placeholder="••••••••"
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            required
+          />
+        </div>
 
-          <div className="space-y-2">
-            <label htmlFor="password" className="block text-sm font-medium text-foreground">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              required
-              className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground placeholder-muted-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
+        <Button type="submit" disabled={isLoading} className="w-full">
+          {isLoading ? 'Signing in...' : 'Sign in'}
+        </Button>
+      </form>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full rounded-lg bg-primary px-4 py-2 font-medium text-primary-foreground transition-colors hover:opacity-90 disabled:opacity-50"
-          >
-            {isLoading ? 'Signing in...' : 'Sign in'}
-          </button>
-        </form>
-
-        {/* Footer */}
-        <p className="mt-6 text-center text-sm text-muted-foreground">
-          Don't have an account?{' '}
-          <Link href="/signup" className="font-semibold text-primary hover:underline">
-            Sign up
-          </Link>
-        </p>
+      {/* Divider */}
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-border" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+        </div>
       </div>
-    </div>
+
+      {/* Social Auth */}
+      <div className="grid grid-cols-2 gap-4">
+        <Button variant="outline" disabled={isLoading} onClick={() => {signIn('google', { callbackUrl: '/' })}}>
+          Google
+        </Button>
+        {/* Only login with google is implemented */}
+        <Button variant="outline" disabled={isLoading} onClick={() => {signIn('github', { callbackUrl: '/' })}}>
+          GitHub
+        </Button>
+      </div>
+
+      {/* Footer */}
+      <p className="text-center text-sm text-muted-foreground">
+        Don't have an account?{' '}
+        <Link href="/signup" className="font-semibold text-primary hover:underline">
+          Sign up
+        </Link>
+      </p>
+    </Card>
   )
 }
