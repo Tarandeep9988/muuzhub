@@ -10,9 +10,9 @@ interface Room {
 }
 
 const MOCK_ROOMS: Room[] = [
-  { code: 'MUSIC01', videoCount: 12, currentlyPlaying: 'Never Gonna Give You Up - Rick Astley' },
-  { code: 'PARTY22', videoCount: 8, currentlyPlaying: 'Blinding Lights - The Weeknd' },
-  { code: 'CHILL05', videoCount: 15, currentlyPlaying: 'Sunroof - Nicky Youre' },
+  // { code: 'MUSIC01', videoCount: 12, currentlyPlaying: 'Never Gonna Give You Up - Rick Astley' },
+  // { code: 'PARTY22', videoCount: 8, currentlyPlaying: 'Blinding Lights - The Weeknd' },
+  // { code: 'CHILL05', videoCount: 15, currentlyPlaying: 'Sunroof - Nicky Youre' },
 ]
 
 export default function Dashboard() {
@@ -51,6 +51,8 @@ export default function Dashboard() {
   const handleJoinRoom = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    
+    console.log("Joining room with code:", roomCode);
 
     if (!roomCode.trim()) {
       setError('Please enter a room code')
@@ -60,7 +62,7 @@ export default function Dashboard() {
     setLoading(true)
 
     try {
-      const res = await fetch(`/api/room/${roomCode.trim()}/verify`)
+      const res = await fetch(`/api/room/${roomCode.trim()}`)
       
       if (res.ok) {
         router.push(`/room/${roomCode.trim()}`)
@@ -115,7 +117,7 @@ export default function Dashboard() {
                 type="text"
                 placeholder="Enter room code"
                 value={roomCode}
-                onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
+                onChange={(e) => setRoomCode(e.target.value)}
                 disabled={loading}
                 className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground placeholder-muted-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
               />

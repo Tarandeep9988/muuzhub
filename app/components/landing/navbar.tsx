@@ -4,13 +4,24 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Play, Menu, X } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { signOut, useSession } from "next-auth/react"
 
 export function Navbar() {
+  const { status } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false)
   const router = useRouter();
+  const isLoggedIn = status === "authenticated";
 
   function navigate(path : string) {
     router.push(path)
+  }
+
+  function handleAuthAction() {
+    if (isLoggedIn) {
+      signOut({ callbackUrl: "/" });
+      return;
+    }
+    navigate('/login');
   }
 
   return (
@@ -38,12 +49,16 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" onClick={() => navigate('/login')}>
-            Log in
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" onClick={handleAuthAction}>
+            {isLoggedIn ? 'Logout' : 'Log in'}
           </Button>
-          <Button size="sm" className="font-semibold" onClick={() => navigate('/signup')}>
-            Get Started
-          </Button>
+          {
+            !isLoggedIn && (
+              <Button size="sm" className="font-semibold" onClick={() => navigate('/signup')}>
+                Get Started
+              </Button>
+            )
+          }
         </div>
 
         <button
@@ -72,12 +87,16 @@ export function Navbar() {
               Community
             </a>
             <div className="flex gap-3 pt-2">
-              <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={() => navigate('/login')}>
-                Log in
+              <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={handleAuthAction}>
+                {isLoggedIn ? 'Logout' : 'Log in'}
               </Button>
-              <Button size="sm" className="font-semibold" onClick={() => navigate('/signup')}>
-                Get Started
-              </Button>
+              {
+                !isLoggedIn && (
+                  <Button size="sm" className="font-semibold" onClick={() => navigate('/signup')}>
+                    Get Started
+                  </Button>
+                )
+              }
             </div>
           </div>
         </div>

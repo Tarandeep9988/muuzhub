@@ -1,35 +1,42 @@
 import { getServerSession } from "next-auth";
-import RoomView from "./Components/roomView";
 import { notFound, redirect } from "next/navigation";
 import { prismaClient } from "@/lib/db";
+import RoomView from "./Components/RoomView";
 
-export default async function RoomPage({ params }: { params: Promise<{ roomCode: string }> }) {
+
+export default async function Page({ params }: { params: Promise<{ roomId: string }> }) {
+
+  // check user is authenticated
   const session = await getServerSession();
 
   // if not authenticated, redirect to home page
   if (!session?.user?.email) {
     return redirect("/");
   }
-  const { roomCode } = await params;
 
   const user = await prismaClient.user.findFirst({
     where: {
       email: session.user.email,
     }
   });
-
+  
+  const { roomId } = await params;
   const room = await prismaClient.room.findFirst({
     where: {
-      id: roomCode,
+      id: roomId,
     }
   });
 
   if (!room) {
-    console.log("Invalid room id");
+    console.log("Room not found");
     notFound();
     return;
   }
-
-  // let say here room is valid and user is authenticated
-  return <RoomView params={params} user={user} room={room} />
+  if (!user) {
+    console.log("User not found");
+    notFound();
+    return;
+  }
+  // return <RoomPage room={room} user={user} />
+  return <RoomView  params={params} user={user} room={room} />
 }
