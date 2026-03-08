@@ -3,9 +3,15 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Play, Menu, X } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const router = useRouter();
+
+  function navigate(path : string) {
+    router.push(path)
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
@@ -32,10 +38,10 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" onClick={() => navigate('/login')}>
             Log in
           </Button>
-          <Button size="sm" className="font-semibold">
+          <Button size="sm" className="font-semibold" onClick={() => navigate('/signup')}>
             Get Started
           </Button>
         </div>
@@ -66,10 +72,10 @@ export function Navbar() {
               Community
             </a>
             <div className="flex gap-3 pt-2">
-              <Button variant="ghost" size="sm" className="text-muted-foreground">
+              <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={() => navigate('/login')}>
                 Log in
               </Button>
-              <Button size="sm" className="font-semibold">
+              <Button size="sm" className="font-semibold" onClick={() => navigate('/signup')}>
                 Get Started
               </Button>
             </div>
