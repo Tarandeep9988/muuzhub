@@ -15,8 +15,7 @@ export default function RoomHeader({ isAdmin, roomId }: RoomHeaderProps) {
 
   return (
     <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
-      {showShareModal && <ShareRoomModal 
-        roomId={roomId}
+      {showShareModal && <ShareRoomModal
         onClose={() => setShowShareModal(false)}
       />}
 

@@ -3,19 +3,20 @@
 import { useEffect, useState } from "react"
 
 interface ShareRoomModalProps {
-  roomId: string
   onClose: () => void
 }
 
 export default function ShareRoomModal({
-  roomId,
   onClose,
 }: ShareRoomModalProps) {
 
   const [inviteUrl, setInviteUrl] = useState("");
+  const [roomId, setRoomId] = useState("");
 
   useEffect(() => {
-    const inviteUrl = `${window.location.origin}/room/${roomId}`;
+    const inviteUrl = window.location.href;
+    const roomId = inviteUrl.split('/').pop() || "";
+    setRoomId(roomId);
     setInviteUrl(inviteUrl);
     setQrCodeUrl(generateQrCodeUrl(inviteUrl));
   }, [])
@@ -104,7 +105,7 @@ export default function ShareRoomModal({
 
         <button
           onClick={handleDownloadQR}
-          className="w-full rounded-lg border border-primary bg-primary/10 px-4 py-2 font-medium text-primary transition-colors hover:bg-primary/20"
+          className="w-full cursor-pointer rounded-lg border border-primary bg-primary/10 px-4 py-2 font-medium text-primary transition-colors hover:bg-primary/20"
         >
           Download QR Code
         </button>
