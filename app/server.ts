@@ -13,9 +13,7 @@ const handler = app.getRequestHandler();
 app.prepare().then(() => {
   const httpServer = createServer(handler);
 
-  const io = new Server(httpServer, {
-    cors: {"origin": "*"},
-  });
+  const io = new Server(httpServer);
 
   setupSocketHandlers(io);
 
