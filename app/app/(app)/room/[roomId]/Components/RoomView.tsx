@@ -14,17 +14,10 @@ type RoomViewProps ={
 
 export default function RoomView({ params, user, room }: RoomViewProps) {
   const { roomId } = use(params)
+  console.log(roomId);
+  console.log(user);
   const [currentStream, setCurrentStream] = useState<Stream | null>(null)
-  const sampleStream: Stream = {
-    id: '1',
-    roomId: roomId,
-    userId: user.id,
-    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    active: true,
-    played: false,
-    createdAt: new Date(),
-  }
-  const [queue, setQueue] = useState<Stream[]>([sampleStream]);
+  const [queue, setQueue] = useState<Stream[]>([]);
   const [streamUrl, setStreamUrl] = useState('')
   const [addingStream, setAddingStream] = useState(false);
   const [isAdmin] = useState(room.adminId === user.id);
@@ -32,11 +25,42 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
   useEffect(() => {
     // fetch all the streams as the video loads
     // add sample stream
+    fetch(`/api/streams/${roomId}`)
+    .then(res => res.json())
+    .then(data => {
+      if(data.streams.length > 0) {
+        setCurrentStream(data.streams[0]);
+        setQueue(data.streams.slice(1));
+      }
+    })
+    .catch(err => {
+      console.error("Error fetching streams: ", err);
+    })
   }, [])
   
 
-  const handleAddToQueue = async () => {
-    
+  const handleAddToQueue = () => {
+    fetch(`/api/stream/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        url: streamUrl,
+        adminId: user.id,
+        roomId: roomId,
+       }),
+    })
+    .then(res => {
+      return res.json();
+    })
+    .then(data => {
+      setQueue(prevQueue => [...prevQueue, data.stream]);
+      setStreamUrl('');
+    })
+    .catch(err => {
+      console.error("Error adding stream to queue: ", err);
+    })
   }
 
   const handleUpvote = async (streamId: string) => {

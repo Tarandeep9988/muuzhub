@@ -4,7 +4,7 @@ import z from "zod";
 import youtubeUrl from 'youtube-url';
 
 const CreateStreamSchema = z.object({
-  creatorId: z.string(),
+  adminId: z.string(),
   url: z.string(),
   roomId: z.string(),
 })
@@ -24,7 +24,7 @@ export async function POST(request : NextRequest) {
 
     const stream = await prismaClient.stream.create({
       data: {
-        userId: data.creatorId,
+        userId: data.adminId,
         url: data.url,
         roomId: data.roomId,
       }
@@ -32,7 +32,7 @@ export async function POST(request : NextRequest) {
 
     return NextResponse.json({
       message: "Stream added successfully",
-      id: stream.id,
+      stream,
     }, {
       status: 201,
     })
@@ -45,45 +45,3 @@ export async function POST(request : NextRequest) {
     })
   }
 }
-
-
-export async function GET(request: NextRequest) {
-  try {
-    const creatorId = request.nextUrl.searchParams.get("creatorId");
-    const streams = await prismaClient.stream.findMany({
-      where: {
-        userId: creatorId ?? "",
-      }
-    });
-    return NextResponse.json({
-      streams,
-    })
-  } catch (error) {
-    return NextResponse.json({
-      message: "Error while fetching streams"
-    }, {
-      status: 500,
-    });
-  }
-}
-
-function getTwoBiggestThumbnail(thumbnails: Array<{url: string, width: number, height: number}>) : any {
-  if (thumbnails.length === 0) {
-    return {
-      smaller: null,
-      bigger: null,
-    }
-  }
-  if (thumbnails.length === 1) {
-    return {
-      smaller: thumbnails[0],
-      bigger: thumbnails[0],
-    }
-  }
-  
-  const sortedThumbnails = thumbnails.sort((a, b) => (b.width * b.height) - (a.width * a.height));
-  return {
-    smaller: sortedThumbnails[1],
-    bigger: sortedThumbnails[0],
-  }
-} 
