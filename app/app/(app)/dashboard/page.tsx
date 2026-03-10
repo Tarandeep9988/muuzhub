@@ -30,13 +30,13 @@ export default function Dashboard() {
     setLoading(true)
 
     try {
-      const res = await fetch('/api/room/create', {
+      const res = await fetch('/api/room/', {
         method: 'POST',
       })
 
       if (res.ok) {
         const data = await res.json()
-        router.push(`/room/${data.roomCode}`)
+        router.push(`/room/${data.room.id}`)
       } else {
         setError('Failed to create room')
       }

@@ -1,3 +1,4 @@
+import "@/lib/loadEnv";
 import { createServer } from "node:http";
 import next from "next";
 import { Server } from "socket.io";
@@ -14,6 +15,7 @@ app.prepare().then(() => {
   const httpServer = createServer(handler);
 
   const io = new Server(httpServer);
+  
 
   setupSocketHandlers(io);
 
@@ -23,6 +25,6 @@ app.prepare().then(() => {
       process.exit(1);
     })
     .listen(port, () => {
-      console.log(`> Socket is ready on http://${hostname}:${port}`);
+      console.log(`> Server is ready on http://${hostname}:${port}`);
     });
 });

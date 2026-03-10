@@ -15,8 +15,8 @@ type RoomViewProps = {
 
 export default function RoomView({ params, user, room }: RoomViewProps) {
   const { roomId } = use(params);
-  console.log(roomId);
-  console.log(user);
+  // console.log(roomId);
+  // console.log(user);
   const [currentStream, setCurrentStream] = useState<Stream | null>(null);
   const [queue, setQueue] = useState<Stream[]>([]);
   const [streamUrl, setStreamUrl] = useState("");
@@ -24,15 +24,28 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
   const [isAdmin] = useState(room.adminId === user.id);
 
   useEffect(() => {
-
     socket.on("connect", () => {
       console.log("Connected to socket server with id: ", socket.id);
       console.log("Joining room: ", roomId);
-      socket.emit("joinRoom", roomId);
+      socket.emit("joinRoom", { roomId, userId: user.id }, (response: any) => {
+        if (!response.success) {
+          console.error("Failed to join room: ", response.message);
+        } else {
+          console.log("Joined room successfully: ", response.message);
+        }
+      });
     });
 
     socket.on("disconnect", () => {
       console.log("Disconnected from socket server");
+    });
+
+    socket.on("streamAdded", ({ stream }: { stream: Stream }) => {
+      setQueue((prevQueue) => [...prevQueue, stream]);
+    });
+
+    socket.on("initialStreams", ({ streams }: { streams: Stream[] }) => {
+      setQueue(streams);
     });
 
     return () => {
@@ -43,31 +56,53 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
   }, []);
 
   const handleAddToQueue = () => {
-    fetch(`/api/stream/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    // Emit directly to socket
+    socket.emit(
+      "addStream",
+      {
+        streamUrl,
       },
-      body: JSON.stringify({
-        url: streamUrl,
-        adminId: user.id,
-        roomId: roomId,
-      }),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setQueue((prevQueue) => [...prevQueue, data.stream]);
-        setStreamUrl("");
-      })
-      .catch((err) => {
-        console.error("Error adding stream to queue: ", err);
-      });
+      (response: any) => {
+        if (response.success) {
+          console.log("Stream added successfully");
+          setStreamUrl("");
+        } else {
+          console.error("Failed to add stream: ", response.message);
+        }
+      }
+    );
   };
 
-  const handleUpvote = async (streamId: string) => {};
-  const handleSkip = async () => {};
+  const handleUpvote = (streamId: string) => {
+    socket.emit(
+      "upvoteStream",
+      {
+        streamId,
+      },
+      (response: any) => {
+        if (response.success) {
+          console.log("Upvote successful");
+        } else {
+          console.error("Upvote failed: ", response.message);
+        }
+      }
+    );
+  };
+  const handleSkip = () => {
+    socket.emit(
+      "skipStream",
+      {
+        streamId: currentStream?.id,
+      },
+      (response: any) => {
+        if (response.success) {
+          console.log("Skip successful");
+        } else {
+          console.error("Skip failed: ", response.message);
+        }
+      }
+    );
+  };
 
   return (
     <div className="my-10 min-h-screen space-y-8 p-6 md:p-10">

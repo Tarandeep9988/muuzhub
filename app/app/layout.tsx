@@ -11,21 +11,8 @@ export const metadata: Metadata = {
   title: 'muuzHub - Democratic Video Streaming',
   description: 'Create collaborative streams where the crowd decides what plays next. Upvote your favorites and let democracy rule the playlist.',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/muuz-hub.icon.png',
+    apple: '/muuz-hub.icon.png',
   },
 }
 
