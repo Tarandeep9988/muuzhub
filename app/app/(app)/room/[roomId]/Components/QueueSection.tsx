@@ -1,4 +1,5 @@
-import type { Room, User, Stream } from '@/prisma/generated/prisma/client'
+import type { Stream } from '@/prisma/generated/prisma/client'
+import StreamComponent from './StreamComponent'
 
 interface QueueSectionProps {
   queue: Stream[]
@@ -6,7 +7,7 @@ interface QueueSectionProps {
   addingStream: boolean
   onStreamUrlChange: (value: string) => void
   onAddToQueue: () => void
-  onUpvote: (streamId: string) => void
+  onUpvote: (stream: Stream) => void
 }
 
 export default function QueueSection({
@@ -56,20 +57,7 @@ export default function QueueSection({
           <p className="text-center text-sm text-muted-foreground">Queue is empty</p>
         ) : (
           queue.map((stream, index) => (
-            <div key={stream.id} className="rounded-lg border border-border bg-card p-3">
-              <div className="flex items-start gap-2">
-                <span className="text-sm font-bold text-primary">#{index + 1}</span>
-                <div className="min-w-0 flex-1">
-                  <p className="line-clamp-2 text-sm font-medium text-foreground">{stream.url}</p>
-                </div>
-                <button
-                  onClick={() => onUpvote(stream.id)}
-                  className="shrink-0 rounded-lg bg-primary/20 px-2 py-1 text-xs font-medium text-primary transition-colors hover:bg-primary/30"
-                >
-                  +1
-                </button>
-              </div>
-            </div>
+            <StreamComponent key={stream.id} stream={stream} index={index} onUpvote={onUpvote} />
           ))
         )}
       </div>

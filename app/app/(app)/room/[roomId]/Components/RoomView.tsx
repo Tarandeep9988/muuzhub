@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useEffectEvent, useState } from "react";
 import NowPlayingSection from "./NowPlayingSection";
 import QueueSection from "./QueueSection";
 import RoomHeader from "./RoomHeader";
@@ -25,8 +25,9 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
 
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("Connected to socket server with id: ", socket.id);
-      console.log("Joining room: ", roomId);
+  
+      // console.log("Connected to socket server with id: ", socket.id);
+      // console.log("Joining room: ", roomId);
       socket.emit("joinRoom", { roomId, userId: user.id }, (response: any) => {
         if (!response.success) {
           console.error("Failed to join room: ", response.message);
@@ -40,8 +41,17 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
       console.log("Disconnected from socket server");
     });
 
-    socket.on("streamAdded", ({ stream }: { stream: Stream }) => {
-      setQueue((prevQueue) => [...prevQueue, stream]);
+    socket.on("queueUpdated", (queue: Stream[]) => {
+      setQueue(queue);
+    });
+
+    socket.on("streamAdded", (response : any) => {
+      if (response.success) {
+        console.log("Stream added successfully: ", response.message);
+        setStreamUrl("");
+      } else {
+        console.error("Failed to add stream: ", response.message);
+      }
     });
 
     socket.on("initialStreams", ({ streams }: { streams: Stream[] }) => {
@@ -54,6 +64,13 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
       socket.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    if (queue.length > 0) {
+      setCurrentStream(queue[0]);
+    }
+  }, [queue])
+  
 
   const handleAddToQueue = () => {
     // Emit directly to socket
@@ -73,7 +90,8 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
     );
   };
 
-  const handleUpvote = (streamId: string) => {
+  const handleUpvote = (stream: Stream) => {
+    const streamId = stream.id;
     socket.emit(
       "upvoteStream",
       {

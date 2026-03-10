@@ -9,31 +9,36 @@ interface SocketWithRoom extends Socket {
   }
 }
 
+const getQueue = async (roomId: string) => {
+  const queue = await prismaClient.stream.findMany({
+    where: {
+      roomId,
+    },
+    orderBy: {
+      createdAt: "asc",
+    }
+  });
+  return queue;
+}
+
 export function setupSocketHandlers(io: Server) {
+
+  const emitUpdatedQueue = async (roomId: string) => {
+    const queue = await getQueue(roomId);
+    io.to(roomId).emit("queueUpdated", queue);
+  };
+
   io.on("connection", (socket: SocketWithRoom) => {
     // console.log("New client connected: ", socket.id);
 
-    socket.on("joinRoom", (data: { roomId: string; userId: string }, callback) => {
-      console.log("Something is trying to join the room: ", data);
-      socket.join(data.roomId);
-
-      // after joining room send all existing streams in the room to the client
-      prismaClient.stream.findMany({
-        where: {
-          roomId: data.roomId,
-        },
-        include: {
-          user: true,
-        }
-      }).then((streams) => {
-        socket.emit("initialStreams", { streams });
-      }).catch((error) => {
-        console.error("Error fetching initial streams for room:", error);
-      });
-
+    socket.on("joinRoom", async (data: { roomId: string; userId: string }, callback) => {
+      // console.log("Something is trying to join the room: ", data);
       socket.data.roomId = data.roomId;
       socket.data.userId = data.userId;
-      console.log(`User ${data.userId} joined room ${data.roomId}`);
+      socket.join(data.roomId);
+
+      // console.log(`User ${data.userId} joined room ${data.roomId}`);
+      await emitUpdatedQueue(data.roomId);
       callback({ success: true, message: `Joined room ${data.roomId} successfully` });
     });
 
@@ -55,7 +60,7 @@ export function setupSocketHandlers(io: Server) {
           error: "Invalid stream URL. Please provide a valid YouTube URL.",
         });
       }
-      console.log(`User ${userId} is adding stream to room ${roomId}: `, data.streamUrl);
+      // console.log(`User ${userId} is adding stream to room ${roomId}: `, data.streamUrl);
       try {
         const stream = await prismaClient.stream.create({
           data: {
@@ -64,8 +69,8 @@ export function setupSocketHandlers(io: Server) {
             roomId,
           }
         });
-        io.to(roomId).emit("streamAdded", {stream});
-        console.log(`User ${userId} added stream ${stream.id} to room ${roomId}`);
+        await emitUpdatedQueue(roomId);
+        // console.log(`User ${userId} added stream ${stream.id} to room ${roomId}`);
         return callback({
           success: true,
           message: "Stream added successfully",
@@ -79,7 +84,10 @@ export function setupSocketHandlers(io: Server) {
         });
       }
 
+      
+
     }); 
+
 
     socket.on("disconnect", () => {
       console.log("Client disconnected: ", socket.id);

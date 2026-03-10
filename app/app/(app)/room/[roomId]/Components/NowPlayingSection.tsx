@@ -1,4 +1,8 @@
 import type { Stream } from '@/prisma/generated/prisma/client'
+import { useState, useEffect } from 'react';
+import youtubesearchapi from "youtube-search-api";
+import youtubeUrl from "youtube-url";
+
 
 interface NowPlayingSectionProps {
   isAdmin: boolean
@@ -7,6 +11,23 @@ interface NowPlayingSectionProps {
 }
 
 export default function NowPlayingSection({isAdmin, currentStream, onSkip }: NowPlayingSectionProps) {
+
+  const [title, setTitle] = useState("Loading...");
+
+  useEffect(() => {
+    if (!currentStream) {
+      return;
+    }
+    const videoId = youtubeUrl.extractId(currentStream?.url || "");
+    youtubesearchapi.GetVideoDetails(videoId || "")
+    .then((response) => {
+      setTitle(response.title);
+    }).catch((error) => {
+      console.error("Failed to fetch video details: ", error);
+      setTitle("Unknown Title");
+    });
+  }, [currentStream]);
+
   return (
     <div className="space-y-6 lg:col-span-2">
       <div className="space-y-4">
@@ -15,7 +36,7 @@ export default function NowPlayingSection({isAdmin, currentStream, onSkip }: Now
           <div className="rounded-lg border border-primary bg-primary/10 p-6">
             <div className="aspect-video rounded-lg bg-secondary">
               <p className="flex items-center justify-center h-full w-full text-sm text-muted-foreground">
-                {currentStream.url}
+                {title}
               </p>
             </div>
             <div className="mt-4 space-y-2">
