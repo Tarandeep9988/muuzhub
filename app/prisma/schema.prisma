@@ -51,7 +51,11 @@ model Stream {
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
-  url String
+  url            String  @default("")
+  title          String  @default("")
+  duration       Int     @default(0)
+  thumbnailUrlHQ String @default("")
+  thumbnailUrlLQ String @default("")
 
   active Boolean @default(true)
   played Boolean @default(false)

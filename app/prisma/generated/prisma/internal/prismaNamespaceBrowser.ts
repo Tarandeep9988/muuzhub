@@ -99,6 +99,10 @@ export const StreamScalarFieldEnum = {
   roomId: 'roomId',
   userId: 'userId',
   url: 'url',
+  title: 'title',
+  duration: 'duration',
+  thumbnailUrlHQ: 'thumbnailUrlHQ',
+  thumbnailUrlLQ: 'thumbnailUrlLQ',
   active: 'active',
   played: 'played',
   createdAt: 'createdAt'
