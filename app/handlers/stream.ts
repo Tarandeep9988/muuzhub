@@ -109,13 +109,14 @@ export async function nextStreamHandler(
     const currentStream = queue[0];
     const nextStream = queue.length > 1 ? queue[1] : null;
     
+    await setStreamActive(currentStream.id, false);
     await setStreamPlayed(currentStream.id, true);
     if (nextStream) {
       await setStreamActive(nextStream.id, true);
     }
 
     await broadCastQueue(io, roomId);
-    
+
     return callback({
       success: true,
       message: "Moved to next stream successfully",

@@ -9,18 +9,22 @@ export async function getStreamsQueue (roomId: string) : Promise<Stream[]> {
         roomId,
         played: false,
       },
-      orderBy: {
-        active: "desc", 
-        createdAt: "asc",
-      }
+      orderBy: [
+        {
+          active: "desc",
+        },
+        {
+          createdAt: "asc",
+        }
+      ]
     });
     if (queue.length > 0 && queue[0].active === false) {
       await setStreamActive(queue[0].id, true);
-      return getStreamsQueue(roomId);
+      return await getStreamsQueue(roomId);
     }
     return queue;
   } catch (error) {
-    throw new Error("Error fetching streams queue from db");
+    throw new Error("Error fetching streams queue from db.");
   }
 }
 
