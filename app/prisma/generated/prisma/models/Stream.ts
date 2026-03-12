@@ -222,8 +222,8 @@ export type StreamGroupByOutputType = {
   url: string
   title: string
   duration: number
-  thumbnailUrlHQ: string | null
-  thumbnailUrlLQ: string | null
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
   active: boolean
   played: boolean
   createdAt: Date
@@ -259,8 +259,8 @@ export type StreamWhereInput = {
   url?: Prisma.StringFilter<"Stream"> | string
   title?: Prisma.StringFilter<"Stream"> | string
   duration?: Prisma.IntFilter<"Stream"> | number
-  thumbnailUrlHQ?: Prisma.StringNullableFilter<"Stream"> | string | null
-  thumbnailUrlLQ?: Prisma.StringNullableFilter<"Stream"> | string | null
+  thumbnailUrlHQ?: Prisma.StringFilter<"Stream"> | string
+  thumbnailUrlLQ?: Prisma.StringFilter<"Stream"> | string
   active?: Prisma.BoolFilter<"Stream"> | boolean
   played?: Prisma.BoolFilter<"Stream"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Stream"> | Date | string
@@ -277,8 +277,8 @@ export type StreamOrderByWithRelationInput = {
   url?: Prisma.SortOrder
   title?: Prisma.SortOrder
   duration?: Prisma.SortOrder
-  thumbnailUrlHQ?: Prisma.SortOrderInput | Prisma.SortOrder
-  thumbnailUrlLQ?: Prisma.SortOrderInput | Prisma.SortOrder
+  thumbnailUrlHQ?: Prisma.SortOrder
+  thumbnailUrlLQ?: Prisma.SortOrder
   active?: Prisma.SortOrder
   played?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -298,8 +298,8 @@ export type StreamWhereUniqueInput = Prisma.AtLeast<{
   url?: Prisma.StringFilter<"Stream"> | string
   title?: Prisma.StringFilter<"Stream"> | string
   duration?: Prisma.IntFilter<"Stream"> | number
-  thumbnailUrlHQ?: Prisma.StringNullableFilter<"Stream"> | string | null
-  thumbnailUrlLQ?: Prisma.StringNullableFilter<"Stream"> | string | null
+  thumbnailUrlHQ?: Prisma.StringFilter<"Stream"> | string
+  thumbnailUrlLQ?: Prisma.StringFilter<"Stream"> | string
   active?: Prisma.BoolFilter<"Stream"> | boolean
   played?: Prisma.BoolFilter<"Stream"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Stream"> | Date | string
@@ -316,8 +316,8 @@ export type StreamOrderByWithAggregationInput = {
   url?: Prisma.SortOrder
   title?: Prisma.SortOrder
   duration?: Prisma.SortOrder
-  thumbnailUrlHQ?: Prisma.SortOrderInput | Prisma.SortOrder
-  thumbnailUrlLQ?: Prisma.SortOrderInput | Prisma.SortOrder
+  thumbnailUrlHQ?: Prisma.SortOrder
+  thumbnailUrlLQ?: Prisma.SortOrder
   active?: Prisma.SortOrder
   played?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -338,8 +338,8 @@ export type StreamScalarWhereWithAggregatesInput = {
   url?: Prisma.StringWithAggregatesFilter<"Stream"> | string
   title?: Prisma.StringWithAggregatesFilter<"Stream"> | string
   duration?: Prisma.IntWithAggregatesFilter<"Stream"> | number
-  thumbnailUrlHQ?: Prisma.StringNullableWithAggregatesFilter<"Stream"> | string | null
-  thumbnailUrlLQ?: Prisma.StringNullableWithAggregatesFilter<"Stream"> | string | null
+  thumbnailUrlHQ?: Prisma.StringWithAggregatesFilter<"Stream"> | string
+  thumbnailUrlLQ?: Prisma.StringWithAggregatesFilter<"Stream"> | string
   active?: Prisma.BoolWithAggregatesFilter<"Stream"> | boolean
   played?: Prisma.BoolWithAggregatesFilter<"Stream"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Stream"> | Date | string
@@ -350,8 +350,8 @@ export type StreamCreateInput = {
   url?: string
   title?: string
   duration?: number
-  thumbnailUrlHQ?: string | null
-  thumbnailUrlLQ?: string | null
+  thumbnailUrlHQ?: string
+  thumbnailUrlLQ?: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -368,8 +368,8 @@ export type StreamUncheckedCreateInput = {
   url?: string
   title?: string
   duration?: number
-  thumbnailUrlHQ?: string | null
-  thumbnailUrlLQ?: string | null
+  thumbnailUrlHQ?: string
+  thumbnailUrlLQ?: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -382,8 +382,8 @@ export type StreamUpdateInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -400,8 +400,8 @@ export type StreamUncheckedUpdateInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -416,8 +416,8 @@ export type StreamCreateManyInput = {
   url?: string
   title?: string
   duration?: number
-  thumbnailUrlHQ?: string | null
-  thumbnailUrlLQ?: string | null
+  thumbnailUrlHQ?: string
+  thumbnailUrlLQ?: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -428,8 +428,8 @@ export type StreamUpdateManyMutationInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -442,8 +442,8 @@ export type StreamUncheckedUpdateManyInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -646,8 +646,8 @@ export type StreamCreateWithoutUserInput = {
   url?: string
   title?: string
   duration?: number
-  thumbnailUrlHQ?: string | null
-  thumbnailUrlLQ?: string | null
+  thumbnailUrlHQ?: string
+  thumbnailUrlLQ?: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -662,8 +662,8 @@ export type StreamUncheckedCreateWithoutUserInput = {
   url?: string
   title?: string
   duration?: number
-  thumbnailUrlHQ?: string | null
-  thumbnailUrlLQ?: string | null
+  thumbnailUrlHQ?: string
+  thumbnailUrlLQ?: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -707,8 +707,8 @@ export type StreamScalarWhereInput = {
   url?: Prisma.StringFilter<"Stream"> | string
   title?: Prisma.StringFilter<"Stream"> | string
   duration?: Prisma.IntFilter<"Stream"> | number
-  thumbnailUrlHQ?: Prisma.StringNullableFilter<"Stream"> | string | null
-  thumbnailUrlLQ?: Prisma.StringNullableFilter<"Stream"> | string | null
+  thumbnailUrlHQ?: Prisma.StringFilter<"Stream"> | string
+  thumbnailUrlLQ?: Prisma.StringFilter<"Stream"> | string
   active?: Prisma.BoolFilter<"Stream"> | boolean
   played?: Prisma.BoolFilter<"Stream"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Stream"> | Date | string
@@ -719,8 +719,8 @@ export type StreamCreateWithoutCurrentStreamOfInput = {
   url?: string
   title?: string
   duration?: number
-  thumbnailUrlHQ?: string | null
-  thumbnailUrlLQ?: string | null
+  thumbnailUrlHQ?: string
+  thumbnailUrlLQ?: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -736,8 +736,8 @@ export type StreamUncheckedCreateWithoutCurrentStreamOfInput = {
   url?: string
   title?: string
   duration?: number
-  thumbnailUrlHQ?: string | null
-  thumbnailUrlLQ?: string | null
+  thumbnailUrlHQ?: string
+  thumbnailUrlLQ?: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -754,8 +754,8 @@ export type StreamCreateWithoutRoomInput = {
   url?: string
   title?: string
   duration?: number
-  thumbnailUrlHQ?: string | null
-  thumbnailUrlLQ?: string | null
+  thumbnailUrlHQ?: string
+  thumbnailUrlLQ?: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -770,8 +770,8 @@ export type StreamUncheckedCreateWithoutRoomInput = {
   url?: string
   title?: string
   duration?: number
-  thumbnailUrlHQ?: string | null
-  thumbnailUrlLQ?: string | null
+  thumbnailUrlHQ?: string
+  thumbnailUrlLQ?: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -805,8 +805,8 @@ export type StreamUpdateWithoutCurrentStreamOfInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -822,8 +822,8 @@ export type StreamUncheckedUpdateWithoutCurrentStreamOfInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -851,8 +851,8 @@ export type StreamCreateWithoutUpvotesInput = {
   url?: string
   title?: string
   duration?: number
-  thumbnailUrlHQ?: string | null
-  thumbnailUrlLQ?: string | null
+  thumbnailUrlHQ?: string
+  thumbnailUrlLQ?: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -868,8 +868,8 @@ export type StreamUncheckedCreateWithoutUpvotesInput = {
   url?: string
   title?: string
   duration?: number
-  thumbnailUrlHQ?: string | null
-  thumbnailUrlLQ?: string | null
+  thumbnailUrlHQ?: string
+  thumbnailUrlLQ?: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -897,8 +897,8 @@ export type StreamUpdateWithoutUpvotesInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -914,8 +914,8 @@ export type StreamUncheckedUpdateWithoutUpvotesInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -928,8 +928,8 @@ export type StreamCreateManyUserInput = {
   url?: string
   title?: string
   duration?: number
-  thumbnailUrlHQ?: string | null
-  thumbnailUrlLQ?: string | null
+  thumbnailUrlHQ?: string
+  thumbnailUrlLQ?: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -940,8 +940,8 @@ export type StreamUpdateWithoutUserInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -956,8 +956,8 @@ export type StreamUncheckedUpdateWithoutUserInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -971,8 +971,8 @@ export type StreamUncheckedUpdateManyWithoutUserInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -984,8 +984,8 @@ export type StreamCreateManyRoomInput = {
   url?: string
   title?: string
   duration?: number
-  thumbnailUrlHQ?: string | null
-  thumbnailUrlLQ?: string | null
+  thumbnailUrlHQ?: string
+  thumbnailUrlLQ?: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -996,8 +996,8 @@ export type StreamUpdateWithoutRoomInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1012,8 +1012,8 @@ export type StreamUncheckedUpdateWithoutRoomInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1027,8 +1027,8 @@ export type StreamUncheckedUpdateManyWithoutRoomInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnailUrlHQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrlLQ?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1162,8 +1162,8 @@ export type $StreamPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     url: string
     title: string
     duration: number
-    thumbnailUrlHQ: string | null
-    thumbnailUrlLQ: string | null
+    thumbnailUrlHQ: string
+    thumbnailUrlLQ: string
     active: boolean
     played: boolean
     createdAt: Date
