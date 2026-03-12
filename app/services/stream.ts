@@ -29,6 +29,39 @@ export async function getStream(roomId: string, streamId: string) : Promise<Stre
   return stream;
 }
 
+export async function setStreamActive(streamId: string, active: boolean) : Promise<Stream> {
+  try {
+    const updatedStream = await prismaClient.stream.update({
+      where: {
+        id: streamId,
+      }, 
+      data: {
+        active,
+      }
+    });
+    return updatedStream;
+  } catch (error) {
+    throw new Error("Error setting stream active in db");
+  }
+}
+
+export async function setStreamPlayed(streamId: string, played: boolean) : Promise<Stream> {
+  try {
+    const updatedStream = await prismaClient.stream.update({
+      where: {
+        id: streamId,
+      }, 
+      data: {
+        played,
+      }
+    });
+    return updatedStream;
+  } catch (error) {
+    throw new Error("Error setting stream played in db");
+  }
+}
+
+
 export async function addStream(url : string, roomId: string, userId: string) : Promise<Stream> {
   try {
     const videoId = getYoutubeVideoId(url);

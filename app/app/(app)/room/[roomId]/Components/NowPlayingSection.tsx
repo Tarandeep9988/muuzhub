@@ -2,6 +2,7 @@ import type { Stream } from '@/prisma/generated/prisma/client'
 import { useState, useEffect } from 'react';
 import youtubesearchapi from "youtube-search-api";
 import youtubeUrl from "youtube-url";
+import Player from './Player';
 
 
 interface NowPlayingSectionProps {
@@ -19,10 +20,8 @@ export default function NowPlayingSection({isAdmin, currentStream, onSkip }: Now
         <h2 className="text-xl font-bold text-foreground">Now Playing</h2>
         {currentStream ? (
           <div className="rounded-lg border border-primary bg-primary/10 p-6">
-            <div className="aspect-video rounded-lg bg-secondary">
-              <div className="flex items-center justify-center h-full w-full text-sm text-muted-foreground">
-                <img className="h-full" src={currentStream.thumbnailUrlHQ} alt="Current stream thumbnail"/>
-              </div>
+            <div className="h-full w-full  aspect-video rounded-lg bg-secondary">
+              <Player videoId={currentStream.videoId} />
             </div>
             <div className="mt-4 space-y-2">
               <h3 className="font-semibold text-xl text-foreground">{currentStream.title}</h3>
