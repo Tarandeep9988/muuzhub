@@ -1,5 +1,4 @@
-import { isYoutubeUrlValid } from "@/lib/youtube";
-import { addStream, deleteStream, getStreamsQueue } from "@/services/stream";
+import { addStream, deleteStream, getStreamsQueue, setStreamActive, setStreamPlayed } from "@/services/stream";
 import { Server, Socket } from "socket.io";
 import * as z from "zod";
 
@@ -27,9 +26,7 @@ export async function addStreamHandler(
 
     const stream = await addStream(parsedData.data.url, roomId, userId);
 
-    // broadcase to all users in same room
-    const queue = await getStreamsQueue(roomId);
-    io.to(roomId).emit("queueUpdated", queue);
+    await broadCastQueue(io, roomId);
 
     return callback({
       success: true,
@@ -39,14 +36,13 @@ export async function addStreamHandler(
   } catch (error) {
     return callback({
       success: false,
-      error:
+      message:
         error instanceof Error
           ? error.message
           : "Internal server error while adding stream",
     });
   }
 }
-
 
 
 const deleteStreamHandlerDataSchema = z.object({
@@ -72,6 +68,7 @@ export async function deleteStreamHandler (
     }
 
     const deletedStream = await deleteStream(parsedData.data.id);
+    await broadCastQueue(io, roomId);
 
     return callback({
       success: true,
@@ -86,5 +83,65 @@ export async function deleteStreamHandler (
           ? error.message
           : "Internal server error while deleting stream",
     });
+  }
+}
+
+
+
+export async function nextStreamHandler(
+  io: Server,
+  socket: Socket,
+  data: any,
+  callback: Function
+): Promise<void> {
+  try {
+    const { roomId, userId } = socket.data;
+    // Check if user is in a room
+    if (!roomId || !userId) {
+      throw new Error("User is not in a room")
+    }
+
+    const queue = await getStreamsQueue(roomId);
+    if (queue.length === 0) {
+      return broadCastQueue(io, roomId);
+    }
+
+    const currentStream = queue[0];
+    const nextStream = queue.length > 1 ? queue[1] : null;
+    
+    await setStreamPlayed(currentStream.id, true);
+    if (nextStream) {
+      await setStreamActive(nextStream.id, true);
+    }
+
+    await broadCastQueue(io, roomId);
+    
+    return callback({
+      success: true,
+      message: "Moved to next stream successfully",
+    });
+
+  } catch (error) {
+    return callback({
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "Internal server error while fetching next stream",
+    });
+  }
+}
+
+export async function broadCastQueue(io: Server, roomId: string, socket?: Socket) {
+  try {
+    const queue = await getStreamsQueue(roomId);
+    if (socket) {
+      socket.emit("queueUpdated", queue);
+      return;
+    }
+
+    io.to(roomId).emit("queueUpdated", queue);
+  } catch (error) {
+    console.error("Error broadcasting queue: ", error);
   }
 }

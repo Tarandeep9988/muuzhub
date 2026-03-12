@@ -2,16 +2,26 @@ import { prismaClient } from "@/lib/db";
 import { getYoutubeVideoId, getYoutubeVideoDetails } from "@/lib/youtube";
 import { Stream } from "@/prisma/generated/prisma/client";
 
-export async function getStreamsQueue (roomId: string) : Promise<Stream[]> {
-  const queue = await prismaClient.stream.findMany({
-    where: {
-      roomId,
-    },
-    orderBy: {
-      createdAt: "asc",
+export async function getStreamsQueue (roomId: string) : Promise<Stream[]> { 
+  try {
+    const queue = await prismaClient.stream.findMany({
+      where: {
+        roomId,
+        played: false,
+      },
+      orderBy: {
+        active: "desc", 
+        createdAt: "asc",
+      }
+    });
+    if (queue.length > 0 && queue[0].active === false) {
+      await setStreamActive(queue[0].id, true);
+      return getStreamsQueue(roomId);
     }
-  });
-  return queue;
+    return queue;
+  } catch (error) {
+    throw new Error("Error fetching streams queue from db");
+  }
 }
 
 export async function getStream(roomId: string, streamId: string) : Promise<Stream> {

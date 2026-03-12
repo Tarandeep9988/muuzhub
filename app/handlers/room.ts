@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { Server, Socket } from "socket.io";
-import { getStreamsQueue } from "@/services/stream";
+import { broadCastQueue } from "@/handlers/stream";
 
 const joinRoomHandlerDataSchema = z.object({
   roomId: z.string(),
@@ -24,8 +24,7 @@ export async function joinRoomHandler(
     socket.join(roomId);
 
     // Emiting updated queue to user
-    const queue = await getStreamsQueue(roomId);
-    socket.emit("queueUpdated", queue);
+    await broadCastQueue(io, roomId, socket);
 
     return callback({
       success: true,
