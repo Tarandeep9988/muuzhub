@@ -772,6 +772,7 @@ export const StreamScalarFieldEnum = {
   duration: 'duration',
   thumbnailUrlHQ: 'thumbnailUrlHQ',
   thumbnailUrlLQ: 'thumbnailUrlLQ',
+  videoId: 'videoId',
   active: 'active',
   played: 'played',
   createdAt: 'createdAt'

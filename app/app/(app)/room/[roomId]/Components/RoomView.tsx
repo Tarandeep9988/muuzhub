@@ -77,7 +77,7 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
     socket.emit(
       "addStream",
       {
-        streamUrl,
+        url: streamUrl,
       },
       (response: any) => {
         if (response.success) {

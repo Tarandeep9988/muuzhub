@@ -43,6 +43,7 @@ export type StreamMinAggregateOutputType = {
   duration: number | null
   thumbnailUrlHQ: string | null
   thumbnailUrlLQ: string | null
+  videoId: string | null
   active: boolean | null
   played: boolean | null
   createdAt: Date | null
@@ -57,6 +58,7 @@ export type StreamMaxAggregateOutputType = {
   duration: number | null
   thumbnailUrlHQ: string | null
   thumbnailUrlLQ: string | null
+  videoId: string | null
   active: boolean | null
   played: boolean | null
   createdAt: Date | null
@@ -71,6 +73,7 @@ export type StreamCountAggregateOutputType = {
   duration: number
   thumbnailUrlHQ: number
   thumbnailUrlLQ: number
+  videoId: number
   active: number
   played: number
   createdAt: number
@@ -95,6 +98,7 @@ export type StreamMinAggregateInputType = {
   duration?: true
   thumbnailUrlHQ?: true
   thumbnailUrlLQ?: true
+  videoId?: true
   active?: true
   played?: true
   createdAt?: true
@@ -109,6 +113,7 @@ export type StreamMaxAggregateInputType = {
   duration?: true
   thumbnailUrlHQ?: true
   thumbnailUrlLQ?: true
+  videoId?: true
   active?: true
   played?: true
   createdAt?: true
@@ -123,6 +128,7 @@ export type StreamCountAggregateInputType = {
   duration?: true
   thumbnailUrlHQ?: true
   thumbnailUrlLQ?: true
+  videoId?: true
   active?: true
   played?: true
   createdAt?: true
@@ -224,6 +230,7 @@ export type StreamGroupByOutputType = {
   duration: number
   thumbnailUrlHQ: string
   thumbnailUrlLQ: string
+  videoId: string
   active: boolean
   played: boolean
   createdAt: Date
@@ -261,6 +268,7 @@ export type StreamWhereInput = {
   duration?: Prisma.IntFilter<"Stream"> | number
   thumbnailUrlHQ?: Prisma.StringFilter<"Stream"> | string
   thumbnailUrlLQ?: Prisma.StringFilter<"Stream"> | string
+  videoId?: Prisma.StringFilter<"Stream"> | string
   active?: Prisma.BoolFilter<"Stream"> | boolean
   played?: Prisma.BoolFilter<"Stream"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Stream"> | Date | string
@@ -279,6 +287,7 @@ export type StreamOrderByWithRelationInput = {
   duration?: Prisma.SortOrder
   thumbnailUrlHQ?: Prisma.SortOrder
   thumbnailUrlLQ?: Prisma.SortOrder
+  videoId?: Prisma.SortOrder
   active?: Prisma.SortOrder
   played?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -300,6 +309,7 @@ export type StreamWhereUniqueInput = Prisma.AtLeast<{
   duration?: Prisma.IntFilter<"Stream"> | number
   thumbnailUrlHQ?: Prisma.StringFilter<"Stream"> | string
   thumbnailUrlLQ?: Prisma.StringFilter<"Stream"> | string
+  videoId?: Prisma.StringFilter<"Stream"> | string
   active?: Prisma.BoolFilter<"Stream"> | boolean
   played?: Prisma.BoolFilter<"Stream"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Stream"> | Date | string
@@ -318,6 +328,7 @@ export type StreamOrderByWithAggregationInput = {
   duration?: Prisma.SortOrder
   thumbnailUrlHQ?: Prisma.SortOrder
   thumbnailUrlLQ?: Prisma.SortOrder
+  videoId?: Prisma.SortOrder
   active?: Prisma.SortOrder
   played?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -340,6 +351,7 @@ export type StreamScalarWhereWithAggregatesInput = {
   duration?: Prisma.IntWithAggregatesFilter<"Stream"> | number
   thumbnailUrlHQ?: Prisma.StringWithAggregatesFilter<"Stream"> | string
   thumbnailUrlLQ?: Prisma.StringWithAggregatesFilter<"Stream"> | string
+  videoId?: Prisma.StringWithAggregatesFilter<"Stream"> | string
   active?: Prisma.BoolWithAggregatesFilter<"Stream"> | boolean
   played?: Prisma.BoolWithAggregatesFilter<"Stream"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Stream"> | Date | string
@@ -347,11 +359,12 @@ export type StreamScalarWhereWithAggregatesInput = {
 
 export type StreamCreateInput = {
   id?: string
-  url?: string
-  title?: string
-  duration?: number
-  thumbnailUrlHQ?: string
-  thumbnailUrlLQ?: string
+  url: string
+  title: string
+  duration: number
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
+  videoId: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -365,11 +378,12 @@ export type StreamUncheckedCreateInput = {
   id?: string
   roomId: string
   userId: string
-  url?: string
-  title?: string
-  duration?: number
-  thumbnailUrlHQ?: string
-  thumbnailUrlLQ?: string
+  url: string
+  title: string
+  duration: number
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
+  videoId: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -384,6 +398,7 @@ export type StreamUpdateInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -402,6 +417,7 @@ export type StreamUncheckedUpdateInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -413,11 +429,12 @@ export type StreamCreateManyInput = {
   id?: string
   roomId: string
   userId: string
-  url?: string
-  title?: string
-  duration?: number
-  thumbnailUrlHQ?: string
-  thumbnailUrlLQ?: string
+  url: string
+  title: string
+  duration: number
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
+  videoId: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -430,6 +447,7 @@ export type StreamUpdateManyMutationInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -444,6 +462,7 @@ export type StreamUncheckedUpdateManyInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -473,6 +492,7 @@ export type StreamCountOrderByAggregateInput = {
   duration?: Prisma.SortOrder
   thumbnailUrlHQ?: Prisma.SortOrder
   thumbnailUrlLQ?: Prisma.SortOrder
+  videoId?: Prisma.SortOrder
   active?: Prisma.SortOrder
   played?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -491,6 +511,7 @@ export type StreamMaxOrderByAggregateInput = {
   duration?: Prisma.SortOrder
   thumbnailUrlHQ?: Prisma.SortOrder
   thumbnailUrlLQ?: Prisma.SortOrder
+  videoId?: Prisma.SortOrder
   active?: Prisma.SortOrder
   played?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -505,6 +526,7 @@ export type StreamMinOrderByAggregateInput = {
   duration?: Prisma.SortOrder
   thumbnailUrlHQ?: Prisma.SortOrder
   thumbnailUrlLQ?: Prisma.SortOrder
+  videoId?: Prisma.SortOrder
   active?: Prisma.SortOrder
   played?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -643,11 +665,12 @@ export type StreamUpdateOneRequiredWithoutUpvotesNestedInput = {
 
 export type StreamCreateWithoutUserInput = {
   id?: string
-  url?: string
-  title?: string
-  duration?: number
-  thumbnailUrlHQ?: string
-  thumbnailUrlLQ?: string
+  url: string
+  title: string
+  duration: number
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
+  videoId: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -659,11 +682,12 @@ export type StreamCreateWithoutUserInput = {
 export type StreamUncheckedCreateWithoutUserInput = {
   id?: string
   roomId: string
-  url?: string
-  title?: string
-  duration?: number
-  thumbnailUrlHQ?: string
-  thumbnailUrlLQ?: string
+  url: string
+  title: string
+  duration: number
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
+  videoId: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -709,6 +733,7 @@ export type StreamScalarWhereInput = {
   duration?: Prisma.IntFilter<"Stream"> | number
   thumbnailUrlHQ?: Prisma.StringFilter<"Stream"> | string
   thumbnailUrlLQ?: Prisma.StringFilter<"Stream"> | string
+  videoId?: Prisma.StringFilter<"Stream"> | string
   active?: Prisma.BoolFilter<"Stream"> | boolean
   played?: Prisma.BoolFilter<"Stream"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Stream"> | Date | string
@@ -716,11 +741,12 @@ export type StreamScalarWhereInput = {
 
 export type StreamCreateWithoutCurrentStreamOfInput = {
   id?: string
-  url?: string
-  title?: string
-  duration?: number
-  thumbnailUrlHQ?: string
-  thumbnailUrlLQ?: string
+  url: string
+  title: string
+  duration: number
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
+  videoId: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -733,11 +759,12 @@ export type StreamUncheckedCreateWithoutCurrentStreamOfInput = {
   id?: string
   roomId: string
   userId: string
-  url?: string
-  title?: string
-  duration?: number
-  thumbnailUrlHQ?: string
-  thumbnailUrlLQ?: string
+  url: string
+  title: string
+  duration: number
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
+  videoId: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -751,11 +778,12 @@ export type StreamCreateOrConnectWithoutCurrentStreamOfInput = {
 
 export type StreamCreateWithoutRoomInput = {
   id?: string
-  url?: string
-  title?: string
-  duration?: number
-  thumbnailUrlHQ?: string
-  thumbnailUrlLQ?: string
+  url: string
+  title: string
+  duration: number
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
+  videoId: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -767,11 +795,12 @@ export type StreamCreateWithoutRoomInput = {
 export type StreamUncheckedCreateWithoutRoomInput = {
   id?: string
   userId: string
-  url?: string
-  title?: string
-  duration?: number
-  thumbnailUrlHQ?: string
-  thumbnailUrlLQ?: string
+  url: string
+  title: string
+  duration: number
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
+  videoId: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -807,6 +836,7 @@ export type StreamUpdateWithoutCurrentStreamOfInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -824,6 +854,7 @@ export type StreamUncheckedUpdateWithoutCurrentStreamOfInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -848,11 +879,12 @@ export type StreamUpdateManyWithWhereWithoutRoomInput = {
 
 export type StreamCreateWithoutUpvotesInput = {
   id?: string
-  url?: string
-  title?: string
-  duration?: number
-  thumbnailUrlHQ?: string
-  thumbnailUrlLQ?: string
+  url: string
+  title: string
+  duration: number
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
+  videoId: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -865,11 +897,12 @@ export type StreamUncheckedCreateWithoutUpvotesInput = {
   id?: string
   roomId: string
   userId: string
-  url?: string
-  title?: string
-  duration?: number
-  thumbnailUrlHQ?: string
-  thumbnailUrlLQ?: string
+  url: string
+  title: string
+  duration: number
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
+  videoId: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -899,6 +932,7 @@ export type StreamUpdateWithoutUpvotesInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -916,6 +950,7 @@ export type StreamUncheckedUpdateWithoutUpvotesInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -925,11 +960,12 @@ export type StreamUncheckedUpdateWithoutUpvotesInput = {
 export type StreamCreateManyUserInput = {
   id?: string
   roomId: string
-  url?: string
-  title?: string
-  duration?: number
-  thumbnailUrlHQ?: string
-  thumbnailUrlLQ?: string
+  url: string
+  title: string
+  duration: number
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
+  videoId: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -942,6 +978,7 @@ export type StreamUpdateWithoutUserInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -958,6 +995,7 @@ export type StreamUncheckedUpdateWithoutUserInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -973,6 +1011,7 @@ export type StreamUncheckedUpdateManyWithoutUserInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -981,11 +1020,12 @@ export type StreamUncheckedUpdateManyWithoutUserInput = {
 export type StreamCreateManyRoomInput = {
   id?: string
   userId: string
-  url?: string
-  title?: string
-  duration?: number
-  thumbnailUrlHQ?: string
-  thumbnailUrlLQ?: string
+  url: string
+  title: string
+  duration: number
+  thumbnailUrlHQ: string
+  thumbnailUrlLQ: string
+  videoId: string
   active?: boolean
   played?: boolean
   createdAt?: Date | string
@@ -998,6 +1038,7 @@ export type StreamUpdateWithoutRoomInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1014,6 +1055,7 @@ export type StreamUncheckedUpdateWithoutRoomInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1029,6 +1071,7 @@ export type StreamUncheckedUpdateManyWithoutRoomInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnailUrlHQ?: Prisma.StringFieldUpdateOperationsInput | string
   thumbnailUrlLQ?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.StringFieldUpdateOperationsInput | string
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   played?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1074,6 +1117,7 @@ export type StreamSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   duration?: boolean
   thumbnailUrlHQ?: boolean
   thumbnailUrlLQ?: boolean
+  videoId?: boolean
   active?: boolean
   played?: boolean
   createdAt?: boolean
@@ -1093,6 +1137,7 @@ export type StreamSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   duration?: boolean
   thumbnailUrlHQ?: boolean
   thumbnailUrlLQ?: boolean
+  videoId?: boolean
   active?: boolean
   played?: boolean
   createdAt?: boolean
@@ -1109,6 +1154,7 @@ export type StreamSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   duration?: boolean
   thumbnailUrlHQ?: boolean
   thumbnailUrlLQ?: boolean
+  videoId?: boolean
   active?: boolean
   played?: boolean
   createdAt?: boolean
@@ -1125,12 +1171,13 @@ export type StreamSelectScalar = {
   duration?: boolean
   thumbnailUrlHQ?: boolean
   thumbnailUrlLQ?: boolean
+  videoId?: boolean
   active?: boolean
   played?: boolean
   createdAt?: boolean
 }
 
-export type StreamOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "roomId" | "userId" | "url" | "title" | "duration" | "thumbnailUrlHQ" | "thumbnailUrlLQ" | "active" | "played" | "createdAt", ExtArgs["result"]["stream"]>
+export type StreamOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "roomId" | "userId" | "url" | "title" | "duration" | "thumbnailUrlHQ" | "thumbnailUrlLQ" | "videoId" | "active" | "played" | "createdAt", ExtArgs["result"]["stream"]>
 export type StreamInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
   currentStreamOf?: boolean | Prisma.Stream$currentStreamOfArgs<ExtArgs>
@@ -1164,6 +1211,7 @@ export type $StreamPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     duration: number
     thumbnailUrlHQ: string
     thumbnailUrlLQ: string
+    videoId: string
     active: boolean
     played: boolean
     createdAt: Date
@@ -1602,6 +1650,7 @@ export interface StreamFieldRefs {
   readonly duration: Prisma.FieldRef<"Stream", 'Int'>
   readonly thumbnailUrlHQ: Prisma.FieldRef<"Stream", 'String'>
   readonly thumbnailUrlLQ: Prisma.FieldRef<"Stream", 'String'>
+  readonly videoId: Prisma.FieldRef<"Stream", 'String'>
   readonly active: Prisma.FieldRef<"Stream", 'Boolean'>
   readonly played: Prisma.FieldRef<"Stream", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Stream", 'DateTime'>

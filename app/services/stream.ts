@@ -1,4 +1,5 @@
 import { prismaClient } from "@/lib/db";
+import { getYoutubeVideoId, getYoutubeVideoDetails } from "@/lib/youtube";
 import { Stream } from "@/prisma/generated/prisma/client";
 
 export async function getStreamsQueue (roomId: string) : Promise<Stream[]> {
@@ -14,7 +15,6 @@ export async function getStreamsQueue (roomId: string) : Promise<Stream[]> {
 }
 
 export async function getStream(roomId: string, streamId: string) : Promise<Stream> {
-
   const stream = await prismaClient.stream.findFirst({
     where: {
       id: streamId,
@@ -27,6 +27,34 @@ export async function getStream(roomId: string, streamId: string) : Promise<Stre
   }
 
   return stream;
+}
+
+export async function addStream(url : string, roomId: string, userId: string) : Promise<Stream> {
+  try {
+    const videoId = getYoutubeVideoId(url);
+    const videoInfo = await getYoutubeVideoDetails(videoId);
+
+    const newStream = await prismaClient.stream.create({
+      data: {
+        url,
+        roomId,
+        userId,
+        videoId,
+        title: videoInfo.title,
+        duration: videoInfo.duration,
+        thumbnailUrlHQ: videoInfo.thumbnailUrlHQ,
+        thumbnailUrlLQ: videoInfo.thumbnailUrlLQ,
+      }
+    });
+
+    if (!newStream) {
+      throw new Error("Error adding stream to db");
+    }
+    
+    return newStream;
+  } catch (error) {
+    throw new Error("Error adding stream to db");
+  }
 }
 
 export async function deleteStream(id: string) : Promise<Stream>{

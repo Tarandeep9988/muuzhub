@@ -1,6 +1,6 @@
-import { deleteStream, getStream, getStreamsQueue } from "@/services/stream";
+import { isYoutubeUrlValid } from "@/lib/youtube";
+import { addStream, deleteStream, getStreamsQueue } from "@/services/stream";
 import { Server, Socket } from "socket.io";
-import youtubeUrl from 'youtube-url';
 import * as z from "zod";
 
 const addStreamHandlerDataSchema = z.object({
@@ -26,11 +26,11 @@ export async function addStreamHandler(
     }
 
     // Check if valid streamUrl
-    if (!youtubeUrl.valid(parsedData.data.url)) {
+    if (!isYoutubeUrlValid(parsedData.data.url)) {
       throw new Error("Invalid stream URL. Please provide a valid YouTube URL");
     }
 
-    const stream = await getStream(userId, roomId);
+    const stream = await addStream(parsedData.data.url, roomId, userId);
 
     // broadcase to all users in same room
     const queue = await getStreamsQueue(roomId);
