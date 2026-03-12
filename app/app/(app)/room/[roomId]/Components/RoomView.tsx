@@ -19,13 +19,12 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
   // console.log(user);
   const [currentStream, setCurrentStream] = useState<Stream | null>(null);
   const [queue, setQueue] = useState<Stream[]>([]);
-  const [streamUrl, setStreamUrl] = useState("");
+  const [streamUrl, setStreamUrl] = useState("wefowjefoiwejf");
   const [addingStream, setAddingStream] = useState(false);
   const [isAdmin] = useState(room.adminId === user.id);
 
   useEffect(() => {
     socket.on("connect", () => {
-  
       // console.log("Connected to socket server with id: ", socket.id);
       // console.log("Joining room: ", roomId);
       socket.emit("joinRoom", { roomId, userId: user.id }, (response: any) => {
@@ -42,15 +41,14 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
     });
 
     socket.on("queueUpdated", (queue: Stream[]) => {
-      setQueue(queue);
-    });
-
-    socket.on("streamAdded", (response : any) => {
-      if (response.success) {
-        console.log("Stream added successfully: ", response.message);
-        setStreamUrl("");
-      } else {
-        console.error("Failed to add stream: ", response.message);
+      if (queue.length > 0) {
+        if (currentStream !== queue[0]) {
+          setCurrentStream(queue[0]);
+        }
+        setQueue(queue.slice(1));
+      }
+      else {
+        setCurrentStream(null);
       }
     });
 
@@ -60,16 +58,11 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
       socket.disconnect();
     };
   }, []);
-
-  useEffect(() => {
-    if (queue.length > 0) {
-      setCurrentStream(queue[0]);
-    }
-  }, [queue])
   
 
   const handleAddToQueue = () => {
     // Emit directly to socket
+    setAddingStream(true);
     socket.emit(
       "addStream",
       {
@@ -82,6 +75,7 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
         } else {
           console.error("Failed to add stream: ", response.message);
         }
+        setAddingStream(false);
       }
     );
   };
@@ -102,17 +96,15 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
       }
     );
   };
-  const handleSkip = () => {
+  const handleNextStream = () => {
     socket.emit(
-      "skipStream",
-      {
-        streamId: currentStream?.id,
-      },
+      "nextStream",
+      {},
       (response: any) => {
         if (response.success) {
-          console.log("Skip successful");
+          console.log("Next stream successful");
         } else {
-          console.error("Skip failed: ", response.message);
+          console.error("Next stream failed: ", response.message);
         }
       }
     );
@@ -125,7 +117,7 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
       <div className="grid gap-6 lg:grid-cols-3">
         <NowPlayingSection
           currentStream={currentStream}
-          onSkip={handleSkip}
+          onSkip={handleNextStream}
           isAdmin={isAdmin}
         />
 

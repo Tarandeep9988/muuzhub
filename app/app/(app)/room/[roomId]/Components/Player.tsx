@@ -2,9 +2,10 @@ import YouTube, { YouTubeProps } from 'react-youtube';
 
 type Props = {
   videoId: string;
+  onNextStream: () => void;
 }
 
-const Player = ({videoId}: Props) => {
+const Player = ({videoId, onNextStream}: Props) => {
   
 
 
@@ -19,7 +20,7 @@ const Player = ({videoId}: Props) => {
   };
 
   return (
-    <YouTube className="w-full h-full" videoId={videoId} opts={opts} />
+    <YouTube onEnd={onNextStream} className="w-full h-full" videoId={videoId} opts={opts} />
   )
 }
 

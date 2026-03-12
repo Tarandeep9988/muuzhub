@@ -21,7 +21,11 @@ export default function NowPlayingSection({isAdmin, currentStream, onSkip }: Now
         {currentStream ? (
           <div className="rounded-lg border border-primary bg-primary/10 p-6">
             <div className="h-full w-full  aspect-video rounded-lg bg-secondary">
-              <Player videoId={currentStream.videoId} />
+              {isAdmin ? (
+                <Player onNextStream={onSkip} videoId={currentStream.videoId} />
+              ) : (
+                <img src={currentStream.thumbnailUrlHQ} alt="Current Stream Thumbnail" />
+              )}
             </div>
             <div className="mt-4 space-y-2">
               <h3 className="font-semibold text-xl text-foreground">{currentStream.title}</h3>
@@ -34,7 +38,7 @@ export default function NowPlayingSection({isAdmin, currentStream, onSkip }: Now
               isAdmin && (
                 <button
                   onClick={onSkip}
-                  className="mt-4 w-full rounded-lg bg-primary px-4 py-2 font-medium text-primary-foreground transition-colors hover:opacity-90"
+                  className="mt-4 cursor-pointer w-full rounded-lg bg-primary px-4 py-2 font-medium text-primary-foreground transition-colors hover:opacity-90"
                 >
                   Skip to Next
                 </button>
