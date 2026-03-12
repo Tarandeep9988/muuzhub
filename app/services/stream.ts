@@ -39,6 +39,9 @@ export async function setStreamActive(streamId: string, active: boolean) : Promi
         active,
       }
     });
+    if(!updatedStream) {
+      throw new Error("Stream not found for updating active status");
+    }
     return updatedStream;
   } catch (error) {
     throw new Error("Error setting stream active in db");
@@ -55,6 +58,9 @@ export async function setStreamPlayed(streamId: string, played: boolean) : Promi
         played,
       }
     });
+    if (!updatedStream) {
+      throw new Error("Stream not found for updating played status");
+    }
     return updatedStream;
   } catch (error) {
     throw new Error("Error setting stream played in db");
