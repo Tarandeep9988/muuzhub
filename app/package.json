@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm dlx tsx watch server.ts",
+    "dev": "pnpm dlx tsx watch --ignore .next --ignore node_modules server.ts",
     "build": "next build",
     "start": "tsx server.ts",
     "lint": "eslint ."
