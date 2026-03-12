@@ -1,11 +1,16 @@
-import { getStream, getStreamsQueue } from "@/services/stream";
+import { deleteStream, getStream, getStreamsQueue } from "@/services/stream";
 import { Server, Socket } from "socket.io";
 import youtubeUrl from 'youtube-url';
+import * as z from "zod";
+
+const addStreamHandlerDataSchema = z.object({
+  url: z.string(),
+})
 
 export async function addStreamHandler(
   io: Server,
   socket: Socket,
-  data: { streamUrl: string },
+  data: { url: string },
   callback: Function
 ) {
   try {
@@ -15,11 +20,16 @@ export async function addStreamHandler(
       throw new Error("User is not in a room")
     }
   
+    const parsedData = await addStreamHandlerDataSchema.safeParse(data);
+    if (!parsedData.success) {
+      throw new Error("Invalid data for adding stream");
+    }
+
     // Check if valid streamUrl
-    if (!youtubeUrl.valid(data.streamUrl)) {
+    if (!youtubeUrl.valid(parsedData.data.url)) {
       throw new Error("Invalid stream URL. Please provide a valid YouTube URL");
     }
-  
+
     const stream = await getStream(userId, roomId);
 
     // broadcase to all users in same room
@@ -38,6 +48,47 @@ export async function addStreamHandler(
         error instanceof Error
           ? error.message
           : "Internal server error while adding stream",
+    });
+  }
+}
+
+
+const deleteStreamHandlerDataSchema = z.object({
+  id: z.string(),
+})
+
+export async function deleteStreamHandler (
+  io: Server,
+  socket: Socket,
+  data: { id: string },
+  callback: Function
+) {
+  try {
+    const { roomId, userId } = socket.data;
+    // Check if user is in a room
+    if (!roomId || !userId) {
+      throw new Error("User is not in a room")
+    }
+
+    const parsedData = await deleteStreamHandlerDataSchema.safeParse(data);
+    if (!parsedData.success) {
+      throw new Error("Invalid data for deleting stream");
+    }
+
+    const deletedStream = await deleteStream(parsedData.data.id);
+
+    return callback({
+      success: true,
+      message: "Stream deleted successfully",
+      stream: deletedStream
+    });
+  } catch (error) {
+    return callback({
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "Internal server error while deleting stream",
     });
   }
 }

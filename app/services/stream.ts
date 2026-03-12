@@ -28,3 +28,22 @@ export async function getStream(roomId: string, streamId: string) : Promise<Stre
 
   return stream;
 }
+
+export async function deleteStream(id: string) : Promise<Stream>{
+
+  try {
+    const deletedStream = await prismaClient.stream.delete({
+      where: {
+        id,
+      }
+    });
+
+    if (!deletedStream) {
+      throw new Error("Stream not found for deletion");
+    }
+
+    return deletedStream;
+  } catch (error) {
+    throw new Error("Error deleting stream from db");
+  }
+}

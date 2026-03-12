@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import { addStreamHandler } from "@/handlers/stream";
+import { addStreamHandler, deleteStreamHandler } from "@/handlers/stream";
 import { joinRoomHandler } from "@/handlers/room";
 
 
@@ -11,6 +11,10 @@ export function setupSocketHandlers(io: Server) {
 
     socket.on("addStream", async (data, callback) => {
       await addStreamHandler(io, socket, data, callback);
+    });
+
+    socket.on("deleteStream", async (data, callback) => {
+      await deleteStreamHandler(io, socket, data, callback);
     });
 
     socket.on("disconnect", () => {

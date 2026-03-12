@@ -2,7 +2,7 @@ import * as z from "zod";
 import { Server, Socket } from "socket.io";
 import { getStreamsQueue } from "@/services/stream";
 
-const dataSchema = z.object({
+const joinRoomHandlerDataSchema = z.object({
   roomId: z.string(),
   userId: z.string(),
 })
@@ -14,7 +14,7 @@ export async function joinRoomHandler(
   callback: Function
 ) {
   try {
-    const parsedData = await dataSchema.safeParse(data);
+    const parsedData = await joinRoomHandlerDataSchema.safeParse(data);
     if (!parsedData.success) {
       throw new Error("Invalid data for joining room");
     }
