@@ -54,10 +54,6 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
       }
     });
 
-    socket.on("initialStreams", ({ streams }: { streams: Stream[] }) => {
-      setQueue(streams);
-    });
-
     return () => {
       socket.off("connect");
       socket.off("disconnect");

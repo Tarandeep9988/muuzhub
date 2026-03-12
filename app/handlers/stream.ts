@@ -25,11 +25,6 @@ export async function addStreamHandler(
       throw new Error("Invalid data for adding stream");
     }
 
-    // Check if valid streamUrl
-    if (!isYoutubeUrlValid(parsedData.data.url)) {
-      throw new Error("Invalid stream URL. Please provide a valid YouTube URL");
-    }
-
     const stream = await addStream(parsedData.data.url, roomId, userId);
 
     // broadcase to all users in same room
@@ -51,6 +46,7 @@ export async function addStreamHandler(
     });
   }
 }
+
 
 
 const deleteStreamHandlerDataSchema = z.object({

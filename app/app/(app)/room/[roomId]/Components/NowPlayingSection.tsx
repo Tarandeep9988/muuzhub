@@ -12,21 +12,6 @@ interface NowPlayingSectionProps {
 
 export default function NowPlayingSection({isAdmin, currentStream, onSkip }: NowPlayingSectionProps) {
 
-  const [title, setTitle] = useState("Loading...");
-
-  useEffect(() => {
-    if (!currentStream) {
-      return;
-    }
-    const videoId = youtubeUrl.extractId(currentStream?.url || "");
-    youtubesearchapi.GetVideoDetails(videoId || "")
-    .then((response) => {
-      setTitle(response.title);
-    }).catch((error) => {
-      console.error("Failed to fetch video details: ", error);
-      setTitle("Unknown Title");
-    });
-  }, [currentStream]);
 
   return (
     <div className="space-y-6 lg:col-span-2">
@@ -35,12 +20,15 @@ export default function NowPlayingSection({isAdmin, currentStream, onSkip }: Now
         {currentStream ? (
           <div className="rounded-lg border border-primary bg-primary/10 p-6">
             <div className="aspect-video rounded-lg bg-secondary">
-              <p className="flex items-center justify-center h-full w-full text-sm text-muted-foreground">
-                {title}
-              </p>
+              <div className="flex items-center justify-center h-full w-full text-sm text-muted-foreground">
+                <img className="h-full" src={currentStream.thumbnailUrlHQ} alt="Current stream thumbnail"/>
+              </div>
             </div>
             <div className="mt-4 space-y-2">
-              <h3 className="font-semibold text-foreground">{currentStream.url}</h3>
+              <h3 className="font-semibold text-xl text-foreground">{currentStream.title}</h3>
+              <a href={currentStream.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                Watch on YouTube
+              </a>
               <p className="text-xs text-muted-foreground">Active: {currentStream.active ? 'Yes' : 'No'}</p>
             </div>
             {

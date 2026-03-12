@@ -8,18 +8,21 @@ type Props = {
 
 const StreamComponent = ({ stream, index, onUpvote }: Props) => {
 
-  
+  console.log(stream);
 
   return (
     <div
       key={stream.id}
       className="rounded-lg border border-border bg-card p-3"
     >
-      <div className="flex items-start gap-2">
+      <div className="flex items-start gap-2 h-5">
         <span className="text-sm font-bold text-primary">#{index + 1}</span>
+        <span className='h-full'>
+          <img className="h-full" src={stream.thumbnailUrlLQ} alt="Stream thumbnail" />
+        </span>
         <div className="min-w-0 flex-1">
           <p className="line-clamp-2 text-sm font-medium text-foreground">
-            {stream.url}
+            {stream.title}
           </p>
         </div>
         <button
