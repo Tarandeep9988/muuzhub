@@ -5,8 +5,8 @@ import { Server } from "socket.io";
 import { setupSocketHandlers } from "./lib/socket-handlers";
 
 const dev = process.env.NODE_ENV !== "production";
-const hostname = "localhost";
-const port = 3000;
+const port = parseInt(process.env.PORT ? process.env.PORT : "3000");
+const hostname = process.env.HOSTNAME || "localhost";
 // when using middleware `hostname` and `port` must be provided below
 const app = next({ dev, hostname, port });
 const handler = app.getRequestHandler();

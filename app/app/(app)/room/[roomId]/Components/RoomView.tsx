@@ -90,7 +90,6 @@ export default function RoomView({ params, user, room }: RoomViewProps) {
       (response: any) => {
         if (response.success) {
           console.log("Upvote successful");
-          NotificationManager.success('Success message', 'Title here');
         } else {
           console.error("Upvote failed: ", response.message);
         }

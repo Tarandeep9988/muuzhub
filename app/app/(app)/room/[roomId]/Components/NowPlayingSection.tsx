@@ -1,7 +1,4 @@
 import type { Stream } from '@/prisma/generated/prisma/client'
-import { useState, useEffect } from 'react';
-import youtubesearchapi from "youtube-search-api";
-import youtubeUrl from "youtube-url";
 import Player from './Player';
 
 

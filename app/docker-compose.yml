@@ -1,0 +1,18 @@
+services:
+  app:
+    container_name: muuzhub
+    image: muuzhub-app:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.docker
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+      RUN_MIGRATIONS: "true"
+    restart: unless-stopped

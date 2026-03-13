@@ -1,7 +1,7 @@
-import { prismaClient } from "@/lib/db";
+import { isYoutubeUrlValid } from "@/lib/youtube";
+import { addStream } from "@/services/stream";
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
-import youtubeUrl from 'youtube-url';
 
 const CreateStreamSchema = z.object({
   adminId: z.string(),
@@ -12,7 +12,7 @@ const CreateStreamSchema = z.object({
 export async function POST(request : NextRequest) {
   try {
     const data = CreateStreamSchema.parse(await request.json());
-    const isYt = youtubeUrl.valid(data.url);
+    const isYt = isYoutubeUrlValid(data.url);
 
     if(!isYt) {
       return NextResponse.json({
@@ -22,13 +22,7 @@ export async function POST(request : NextRequest) {
       })
     }
 
-    const stream = await prismaClient.stream.create({
-      data: {
-        userId: data.adminId,
-        url: data.url,
-        roomId: data.roomId,
-      }
-    });
+    const stream = await addStream(data.url, data.roomId, data.adminId);
 
 
     return NextResponse.json({
@@ -42,7 +36,7 @@ export async function POST(request : NextRequest) {
     return NextResponse.json({
       message: "Error while adding a stream"
     }, {
-      status: 411,
+      status: 500,
     })
   }
 }

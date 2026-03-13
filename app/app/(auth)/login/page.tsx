@@ -4,12 +4,22 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { Suspense, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={<Card className="w-full max-w-md p-8 text-center text-sm text-muted-foreground">Loading...</Card>}>
+      <LoginPageContent />
+    </Suspense>
+  )
+}
+
+function LoginPageContent() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/'
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -29,7 +39,7 @@ export default function LoginPage() {
       })
 
       if (res.ok) {
-        router.push('/')
+        router.push(callbackUrl)
       }
     } catch (error) {
       console.error('Error logging in:', error)
@@ -89,11 +99,11 @@ export default function LoginPage() {
 
       {/* Social Auth */}
       <div className="grid grid-cols-2 gap-4">
-        <Button variant="outline" disabled={isLoading} onClick={() => {signIn('google', { callbackUrl: '/' })}}>
+        <Button variant="outline" disabled={isLoading} onClick={() => {signIn('google', { callbackUrl })}}>
           Google
         </Button>
         {/* Only login with google is implemented */}
-        <Button variant="outline" disabled={isLoading} onClick={() => {signIn('github', { callbackUrl: '/' })}}>
+        <Button variant="outline" disabled={isLoading} onClick={() => {signIn('github', { callbackUrl })}}>
           GitHub
         </Button>
       </div>
