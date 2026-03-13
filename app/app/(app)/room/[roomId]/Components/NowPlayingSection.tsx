@@ -24,7 +24,7 @@ export default function NowPlayingSection({isAdmin, currentStream, onSkip }: Now
               {isAdmin ? (
                 <Player onNextStream={onSkip} videoId={currentStream.videoId} />
               ) : (
-                <img src={currentStream.thumbnailUrlHQ} alt="Current Stream Thumbnail" />
+                <img className='h-full w-full' src={currentStream.thumbnailUrlHQ} alt="Current Stream Thumbnail" />
               )}
             </div>
             <div className="mt-4 space-y-2">

@@ -6,9 +6,6 @@ type Props = {
 }
 
 const Player = ({videoId, onNextStream}: Props) => {
-  
-
-
 
   const opts: YouTubeProps['opts'] = {
     width: '100%',
