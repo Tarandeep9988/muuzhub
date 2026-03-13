@@ -45,6 +45,7 @@ export default function QueueSection({
           <button
             type="submit"
             disabled={addingStream || !streamUrl.trim()}
+            style={addingStream ? { cursor: "not-allowed" } : {}}
             className="w-full cursor-pointer rounded-lg bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90 disabled:opacity-50"
           >
             {addingStream ? 'Adding...' : 'Add'}

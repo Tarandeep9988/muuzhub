@@ -1,14 +1,4 @@
 import youtubeUrl from "youtube-url";
-import { GetVideoDetails, VideoDetails } from "youtube-search-api";
-
-function getVideoThumbnails(thumbnail: any) {
-  const thumbnails = [...thumbnail.thumbnails];
-  // sorting thumbnails by width * height in descending order
-  thumbnails.sort((a: any, b: any) => b.width - a.width);
-  const thumbnailUrlHQ = thumbnails[0].url;
-  const thumbnailUrlLQ = thumbnails[1]?.url || thumbnailUrlHQ;
-  return { thumbnailUrlHQ, thumbnailUrlLQ };
-}
 
 export async function getYoutubeVideoDetails(
   videoId: string
@@ -20,17 +10,18 @@ export async function getYoutubeVideoDetails(
   thumbnailUrlLQ: string;
 }> {
   try {
-    const videoDetails = await GetVideoDetails(videoId);
-    const { thumbnailUrlHQ, thumbnailUrlLQ } = getVideoThumbnails(
-      videoDetails.thumbnail
-    );
+    const response = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch video details");
+    }
+    const videoDetails = await response.json();
 
     return {
       title: videoDetails.title,
       videoId,
       duration: 0,
-      thumbnailUrlHQ,
-      thumbnailUrlLQ
+      thumbnailUrlHQ: videoDetails.thumbnail_url || "",
+      thumbnailUrlLQ: videoDetails.thumbnail_url || ""
     };
   } catch (error) {
     throw new Error("Error fetching YouTube video info");

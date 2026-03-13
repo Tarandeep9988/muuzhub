@@ -21,6 +21,9 @@ export function setupSocketHandlers(io: Server) {
       await nextStreamHandler(io, socket, data, callback);
     });
 
+    socket.on("upvoteStream", async (data, callback) => {
+
+    });
 
     socket.on("disconnect", () => {
       console.log("Client disconnected: ", socket.id);

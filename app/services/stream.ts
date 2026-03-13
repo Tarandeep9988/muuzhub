@@ -1,6 +1,7 @@
 import { prismaClient } from "@/lib/db";
 import { getYoutubeVideoId, getYoutubeVideoDetails } from "@/lib/youtube";
 import { Stream } from "@/prisma/generated/prisma/client";
+import { createUpvote } from "./upvote";
 
 export async function getStreamsQueue (roomId: string) : Promise<Stream[]> { 
   try {
@@ -9,9 +10,17 @@ export async function getStreamsQueue (roomId: string) : Promise<Stream[]> {
         roomId,
         played: false,
       },
+      include: {
+        upvotes: true,
+      },
       orderBy: [
         {
           active: "desc",
+        },
+        {
+          upvotes: {
+            _count: "desc",
+          },
         },
         {
           createdAt: "asc",
@@ -128,3 +137,27 @@ export async function deleteStream(id: string) : Promise<Stream>{
     throw new Error("Error deleting stream from db");
   }
 }
+
+export async function upvoteStream(streamId: string, userId: string) : Promise<Stream> {
+  try {
+    const upvote = await createUpvote(streamId, userId);
+    if (!upvote) {
+      throw new Error("Error creating upvote");
+    }
+
+    const stream = await prismaClient.stream.findUnique({
+      where: {
+        id: streamId,
+      }
+    });
+
+    if (!stream) {
+      throw new Error("Stream not found for upvoting");
+    }
+
+    return stream;
+  } catch (error) {
+    throw new Error("Error upvoting stream");
+  }
+}
+    
