@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import { addStreamHandler, deleteStreamHandler, nextStreamHandler } from "@/handlers/stream";
+import { addStreamHandler, deleteStreamHandler, nextStreamHandler, upvoteStreamHandler } from "@/handlers/stream";
 import { joinRoomHandler } from "@/handlers/room";
 
 
@@ -22,7 +22,7 @@ export function setupSocketHandlers(io: Server) {
     });
 
     socket.on("upvoteStream", async (data, callback) => {
-
+      await upvoteStreamHandler(io, socket, data, callback);
     });
 
     socket.on("disconnect", () => {

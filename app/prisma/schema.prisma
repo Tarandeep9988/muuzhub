@@ -58,7 +58,7 @@ model Stream {
   thumbnailUrlLQ String 
   videoId       String
 
-  active Boolean @default(true)
+  active Boolean @default(false)
   played Boolean @default(false)
 
   upvotes Upvote[]
