@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     
   } catch (error) {
     return NextResponse.json({
-      message: "Error creating room",
+      message: "Error creating room " + error,
     }, {
       status: 500,
     });

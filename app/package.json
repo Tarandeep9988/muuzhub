@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "pnpm dlx tsx watch --ignore .next --ignore node_modules server.ts",
     "build": "next build",
-    "start": "pnpm tsx server.ts",
+    "start": "tsx server.ts",
     "lint": "eslint ."
   },
   "dependencies": {

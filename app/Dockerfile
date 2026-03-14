@@ -29,14 +29,19 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
-# The start script uses `tsx server.ts`.
+RUN apt-get update -y \
+	&& apt-get install -y --no-install-recommends openssl ca-certificates \
+	&& rm -rf /var/lib/apt/lists/*
+
 RUN npm install --global tsx@4.20.6
 
 COPY --from=builder /app ./
+
+RUN chown -R node:node /app
 
 EXPOSE 3000
 
 USER node
 
 # Set RUN_MIGRATIONS=true to run Prisma migrations before app start.
-CMD ["sh", "-c", "if [ \"$RUN_MIGRATIONS\" = \"true\" ]; then pnpm prisma migrate deploy; fi && pnpm start"]
+CMD ["sh", "-c", "if [ \"$RUN_MIGRATIONS\" = \"true\" ]; then ./node_modules/.bin/prisma migrate deploy; fi && tsx server.ts"]

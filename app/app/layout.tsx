@@ -27,12 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <AuthProvider>
-        <body className={`${_inter.variable} ${_spaceGrotesk.variable} font-sans antialiased`}>
+      <body className={`${_inter.variable} ${_spaceGrotesk.variable} font-sans antialiased`}>
+        <AuthProvider>
           {children}
           <Analytics />
-        </body>
-      </AuthProvider>
+        </AuthProvider>
+      </body>
     </html>
   )
 }
