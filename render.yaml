@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: muuzhub
+    runtime: docker
+    plan: starter
+    dockerContext: ./app
+    dockerfilePath: ./app/Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOSTNAME
+        value: 0.0.0.0
+      - key: RUN_MIGRATIONS
+        value: "true"
+      - key: DATABASE_URL
+        sync: false
+      - key: NEXTAUTH_URL
+        sync: false
+      - key: NEXTAUTH_SECRET
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
