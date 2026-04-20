@@ -28,6 +28,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
+ENV NODE_OPTIONS="--max-old-space-size=384"
 
 RUN apt-get update -y \
 	&& apt-get install -y --no-install-recommends openssl ca-certificates \
