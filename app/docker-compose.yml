@@ -1,7 +1,7 @@
 services:
   app:
     container_name: muuzhub
-    image: muuzhub-app:local
+    image: muuzhub:latest
     build:
       context: .
       dockerfile: Dockerfile
